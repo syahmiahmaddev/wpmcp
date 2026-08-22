@@ -80,9 +80,9 @@ abstract class WPMCP_Base_Tool implements WPMCP_Tool_Interface {
 	 *
 	 * @param array<string, mixed> $params Provided parameters.
 	 * @param array<string>        $required_keys List of required keys.
-	 * @return true|WP_Error
+	 * @return bool|WP_Error
 	 */
-	protected function validate_required( array $params, array $required_keys ): true|WP_Error {
+	protected function validate_required( array $params, array $required_keys ): bool|WP_Error {
 		foreach ( $required_keys as $key ) {
 			if ( ! isset( $params[ $key ] ) || '' === $params[ $key ] ) {
 				return new WP_Error(

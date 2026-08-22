@@ -113,8 +113,11 @@ class WPMCP_REST_Controller {
 
 	/**
 	 * Permission callback for MCP routes.
+	 *
+	 * @param WP_REST_Request $request REST request.
+	 * @return bool|WP_Error
 	 */
-	public function check_mcp_permission( WP_REST_Request $request ): true|WP_Error {
+	public function check_mcp_permission( WP_REST_Request $request ): bool|WP_Error {
 		$auth = $this->security->authenticate_rest_request( $request );
 		if ( is_wp_error( $auth ) ) {
 			return $auth;

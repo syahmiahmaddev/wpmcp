@@ -153,14 +153,14 @@ class WPMCP_Tool_Registry {
 
 		// Log to Audit Logger.
 		$this->audit_logger->log_action(
-			user_id: $user_id,
-			tool_name: $tool_name,
-			risk_level: $tool->get_risk_level(),
-			prompt: $prompt,
-			arguments: $params,
-			result: $result,
-			snapshot_before: $snapshot_before,
-			status: ! empty( $result['success'] ) ? 'success' : 'error'
+			$user_id,
+			$tool_name,
+			$tool->get_risk_level(),
+			$prompt,
+			$params,
+			$result,
+			$snapshot_before,
+			! empty( $result['success'] ) ? 'success' : 'error'
 		);
 
 		return $result;

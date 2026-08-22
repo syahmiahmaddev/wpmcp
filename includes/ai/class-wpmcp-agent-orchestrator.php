@@ -226,13 +226,15 @@ class WPMCP_Agent_Orchestrator {
 		$user      = get_userdata( $user_id > 0 ? $user_id : get_current_user_id() );
 		$user_name = $user ? $user->display_name : 'Admin';
 		$custom_p  = (string) $this->settings->get( 'system_prompt_custom', '' );
+		$php_ver   = phpversion();
+		$wp_ver    = get_bloginfo( 'version' );
 
 		$prompt = <<<PROMPT
 You are WP-MCP, an intelligent WordPress AI Copilot embedded directly in this WordPress installation.
 Your mission is to help the site administrator ({$user_name}) manage, customize, troubleshoot, write content, and configure their WordPress site ({$site_name} at {$site_url}) using prompt-driven actions.
 
 Active Theme: {$theme}
-WordPress Environment: PHP {phpversion()}, WordPress {get_bloginfo('version')}
+WordPress Environment: PHP {$php_ver}, WordPress {$wp_ver}
 
 Core Operating Guidelines:
 1. When asked to inspect, query, or check something, call the appropriate read tools (e.g. wpmcp_get_posts, wpmcp_get_site_info, wpmcp_list_plugins).
