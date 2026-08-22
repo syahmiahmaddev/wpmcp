@@ -36,6 +36,8 @@ class WPMCP_Autoloader {
 		'WPMCP_Site_Tools'           => 'includes/tools/class-wpmcp-site-tools.php',
 		'WPMCP_System_Tools'         => 'includes/tools/class-wpmcp-system-tools.php',
 		'WPMCP_Block_Tools'          => 'includes/tools/class-wpmcp-block-tools.php',
+		'WPMCP_Cache_Tools'          => 'includes/tools/class-wpmcp-cache-tools.php',
+		'WPMCP_Elementor_Tools'      => 'includes/tools/class-wpmcp-elementor-tools.php',
 		'WPMCP_WooCommerce_Tools'    => 'includes/tools/class-wpmcp-woocommerce-tools.php',
 
 		// AI Engine

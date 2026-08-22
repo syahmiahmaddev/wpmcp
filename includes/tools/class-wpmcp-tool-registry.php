@@ -86,6 +86,12 @@ class WPMCP_Tool_Registry {
 		// Gutenberg Block Tools
 		WPMCP_Block_Tools::register( $this );
 
+		// Cache Management Tools (WP Rocket, LiteSpeed, W3TC, etc.)
+		WPMCP_Cache_Tools::register( $this );
+
+		// Elementor Page Builder Tools (if active)
+		WPMCP_Elementor_Tools::register( $this );
+
 		// WooCommerce (if active)
 		if ( class_exists( 'WooCommerce' ) ) {
 			WPMCP_WooCommerce_Tools::register( $this );
