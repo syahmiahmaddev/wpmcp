@@ -18,7 +18,8 @@
 [Client Configurations](#-connecting-your-mcp-clients) •
 [Tools Catalog](#-tools-catalog) •
 [Architecture](#-architecture) •
-[Security & Safety](#-security--safety-first)
+[Security & Safety](#-security--safety-first) •
+[FAQ](#-frequently-asked-questions-faq)
 
 ---
 
@@ -320,6 +321,56 @@ wpmcp/
 ├── README.md                   # Documentation
 └── CHANGELOG.md                # Release changelog
 ```
+
+---
+
+## ❓ Frequently Asked Questions (FAQ)
+
+<details>
+<summary><b>Can the MCP API token limit what the AI model is allowed to change on the site?</b></summary>
+
+**Yes, absolutely.** WP-MCP enforces strict multi-layered access control:
+
+1. **Role-Based Capability Scoping (RBAC):** Every token is bound to a specific WordPress user ID (`user_id`). A token generated for an `Editor` can create posts and edit Elementor page designs (`edit_posts`), but is prevented from touching site options, active plugins, or themes (which require `manage_options`).
+2. **Token Permission Scopes:** Tokens can be configured with `read_only` (restricts the model exclusively to read/query tools like `wpmcp_get_posts` or `wpmcp_elementor_get_page_data`), `read_write` (enables content and page creation while restricting system-level alterations), or `full_admin`.
+3. **Tool-Level Capability Gating:** Each tool requires specific WordPress capabilities. For instance, Elementor layout editing requires `edit_posts`, whereas modifying Elementor Global Kits or Custom CSS requires `edit_theme_options`.
+4. **Custom Capability Filters:** Developers can filter tool permissions dynamically via the `wpmcp_tool_required_capability` filter to restrict specific post IDs, custom post types, or individual tools.
+5. **Automatic State Snapshots:** Even when write access is granted, destructive or layout-altering tools automatically record pre-state snapshots in the audit log for 1-click rollbacks.
+</details>
+
+<details>
+<summary><b>Does WP-MCP support Elementor, Gutenberg, and Full Site Editing (FSE)?</b></summary>
+
+**Yes.** WP-MCP provides deep native integrations:
+* **Elementor:** Inspect widget trees, update raw `_elementor_data` structures, query Global Kit settings (colors & typography), update page-level Custom CSS, and automatically regenerate Elementor's CSS cache.
+* **Gutenberg & FSE:** Parse block markup into JSON Abstract Syntax Trees (AST), render block structures server-side, discover block patterns, and query FSE block templates.
+</details>
+
+<details>
+<summary><b>How does WP-MCP connect to external clients like Claude Desktop, Cursor, or Antigravity?</b></summary>
+
+WP-MCP supports two connection modes:
+* **Remote SSE:** Point clients directly to `https://your-site.com/wp-json/wpmcp/v1/sse` with an `Authorization: Bearer wpmcp_...` header.
+* **Universal stdio Bridge:** Use `bin/mcp-bridge.js` with Node.js to bridge stdio-only clients (Claude Desktop, Cursor, Antigravity, Cline) to your WordPress REST endpoint.
+</details>
+
+<details>
+<summary><b>How do 1-Click Rollbacks work if the AI makes an unwanted change?</b></summary>
+
+Before executing any state-mutating tool (such as updating a post, replacing Elementor layout JSON, modifying Custom CSS, or updating site options), WP-MCP captures an immutable snapshot of the prior state in `{prefix}wpmcp_audit_logs`. You can click **Rollback** in the WP-Admin Audit Log or Copilot chat UI to instantly revert changes.
+</details>
+
+<details>
+<summary><b>Can I run WP-MCP with local models like Ollama without third-party APIs?</b></summary>
+
+**Yes.** The in-admin AI Copilot natively supports Ollama and any OpenAI-compatible local API endpoint (e.g. LM Studio, vLLM, LocalAI). Your site data and prompts never leave your local machine or private server.
+</details>
+
+<details>
+<summary><b>Does WP-MCP allow arbitrary code execution or PHP injection?</b></summary>
+
+**No.** WP-MCP uses strongly typed, schema-validated tool definitions. All parameters are sanitized, and operations are routed through standard WordPress core APIs and capabilities. Arbitrary PHP evaluation and direct file modifications are strictly prohibited.
+</details>
 
 ---
 

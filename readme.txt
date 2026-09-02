@@ -40,11 +40,11 @@ Prompt your WordPress site to create content, change settings, tweak CSS, manage
 = Does WP-MCP work with Claude Desktop and Cursor? =
 Yes! WP-MCP provides both a direct SSE endpoint (`/wp-json/wpmcp/v1/sse`) and a universal stdio bridge (`bin/mcp-bridge.js`) allowing Claude Desktop, Cursor, and Google Antigravity to connect with ease.
 
-= What permissions are required? =
-WP-MCP strictly enforces native WordPress capability checks (e.g. `manage_options`, `edit_posts`, `activate_plugins`). Only authorized administrators and editors can run tools matching their role capabilities.
+= What permissions are required, and can tokens limit what the AI modifies? =
+WP-MCP strictly enforces native WordPress capability checks (e.g. `manage_options`, `edit_posts`, `edit_theme_options`). API tokens are bound to specific user accounts and can be scoped to `read_only`, `read_write`, or `full_admin`. For example, an Editor token can modify Elementor pages or posts, but cannot touch plugins, site options, or themes.
 
 = How do rollbacks work? =
-Before executing modifications to posts, site options, or Custom CSS, WP-MCP snapshots the previous state. You can revert any action with a single click from the Audit Log or in-chat card.
+Before executing modifications to posts, Elementor layout data, site options, or Custom CSS, WP-MCP snapshots the previous state. You can revert any action with a single click from the Audit Log or in-chat card.
 
 == Changelog ==
 
