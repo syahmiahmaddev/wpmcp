@@ -377,6 +377,14 @@ class WPMCP_Tool_Update_Post extends WPMCP_Base_Tool {
 					'type'        => 'string',
 					'description' => 'New post excerpt.',
 				),
+				'post_name'   => array(
+					'type'        => 'string',
+					'description' => 'New post slug / permalink name.',
+				),
+				'slug'        => array(
+					'type'        => 'string',
+					'description' => 'New post slug / permalink name (alias for post_name).',
+				),
 				'categories'  => array(
 					'type'        => 'array',
 					'items'       => array( 'type' => 'string' ),
@@ -416,6 +424,11 @@ class WPMCP_Tool_Update_Post extends WPMCP_Base_Tool {
 		}
 		if ( isset( $params['excerpt'] ) ) {
 			$post_arr['post_excerpt'] = sanitize_textarea_field( $params['excerpt'] );
+		}
+		if ( ! empty( $params['post_name'] ) ) {
+			$post_arr['post_name'] = sanitize_title( $params['post_name'] );
+		} elseif ( ! empty( $params['slug'] ) ) {
+			$post_arr['post_name'] = sanitize_title( $params['slug'] );
 		}
 
 		$updated_id = wp_update_post( $post_arr, true );
