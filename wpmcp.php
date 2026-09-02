@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       WP-MCP: AI Prompt Copilot & MCP Server
- * Plugin URI:        https://github.com/syahmiahmad/wpmcp
+ * Plugin URI:        https://github.com/syahmiahmaddev/wpmcp
  * Description:       Empowers WordPress administrators to prompt and manage their site using AI, and exposes a secure Model Context Protocol (MCP) server for external clients (Claude Desktop, Cursor).
  * Version:           1.0.0
  * Requires at least: 6.0
